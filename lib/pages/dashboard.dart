@@ -76,7 +76,13 @@ class _DashboardPageState extends State<DashboardPage> {
             },
           ),
           selectedDevice == null
-              ? const SizedBox()
+              ? Container(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: ControlDiv(
+                    statusNotifier: ValueNotifier(StatusType.safe),
+                    heaterValues: _callbackToggle,
+                  ),
+                )
               : FutureBuilder(
                   future: connectToDevice(selectedDevice!.address),
                   builder: (context, snapshot) {
@@ -98,8 +104,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             payload.description,
                           );
                         }
-                        statusNotifier.value =
-                            payload.status; // <-- triggers the UI
+                        statusNotifier.value = payload.status;
                         _listKey.currentState?.addPayload(payload);
                       });
                       return Container(

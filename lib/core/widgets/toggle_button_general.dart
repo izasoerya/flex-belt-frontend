@@ -27,15 +27,11 @@ class _ToggleButtonGeneralState extends State<ToggleButtonGeneral> {
           isSelected: [_isAdmin, !_isAdmin],
           color: const Color.fromRGBO(2, 84, 100, 1),
           selectedColor: Colors.white,
-          fillColor: _isAdmin
-              ? const Color.fromRGBO(
-                  2, 84, 100, 1) // Current color for items[0]
-              : Colors.red, // Red color for items[1]
+          fillColor:
+              _isAdmin ? const Color.fromRGBO(2, 84, 100, 1) : Colors.red,
           borderColor: const Color.fromRGBO(2, 84, 100, 1),
-          selectedBorderColor: _isAdmin
-              ? const Color.fromRGBO(
-                  2, 84, 100, 1) // Current color for items[0]
-              : Colors.red, // Red color for items[1],
+          selectedBorderColor:
+              _isAdmin ? const Color.fromRGBO(2, 84, 100, 1) : Colors.red,
           onPressed: (index) async {
             setState(() {
               _isAdmin = index == 0;

@@ -56,6 +56,7 @@ class _ControlDivState extends State<ControlDiv> {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Switch(value: false, onChanged: (_) {}),
                   ToggleButtonGeneral(
                     items: ['Dingin', 'Panas'],
                     onChanged: setCold,
