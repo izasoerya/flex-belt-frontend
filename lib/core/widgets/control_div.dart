@@ -1,6 +1,7 @@
 import 'package:flex_belt/core/constants/enum.dart';
 import 'package:flex_belt/core/widgets/boxed_icon.dart';
 import 'package:flex_belt/core/widgets/slider_value.dart';
+import 'package:flex_belt/core/widgets/switch_button.dart';
 import 'package:flex_belt/core/widgets/toggle_button_general.dart';
 import 'package:flutter/material.dart';
 
@@ -31,6 +32,9 @@ class _ControlDivState extends State<ControlDiv> {
         widget.heaterValues({isCold: value.toInt()});
       });
 
+  bool on = false;
+  void setOn(bool value) => setState(() => on = value);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -54,9 +58,9 @@ class _ControlDivState extends State<ControlDiv> {
           child: Column(
             children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Switch(value: false, onChanged: (_) {}),
+                  SwitchButton(on: on, onChanged: setOn),
+                  Padding(padding: EdgeInsets.only(right: 10)),
                   ToggleButtonGeneral(
                     items: ['Dingin', 'Panas'],
                     onChanged: setCold,
