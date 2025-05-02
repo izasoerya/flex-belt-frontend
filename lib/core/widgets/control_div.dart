@@ -23,17 +23,28 @@ class _ControlDivState extends State<ControlDiv> {
   bool isCold = true;
   void setCold(bool value) => setState(() {
         isCold = value;
-        widget.heaterValues({isCold: heaterValue.toInt()});
+        on
+            ? widget.heaterValues({isCold: heaterValue.toInt()})
+            : widget.heaterValues({isCold: 0});
       });
 
   double heaterValue = 0;
   void setHeaterValue(double value) => setState(() {
         heaterValue = value;
-        widget.heaterValues({isCold: value.toInt()});
+        on
+            ? widget.heaterValues({isCold: value.toInt()})
+            : widget.heaterValues({isCold: 0});
       });
 
   bool on = false;
-  void setOn(bool value) => setState(() => on = value);
+  void setOn(bool value) => setState(() {
+        on = value;
+        on
+            ? widget.heaterValues({isCold: heaterValue.toInt()})
+            : widget.heaterValues({isCold: 0});
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Heater is ${on ? 'ON' : 'OFF'}!')));
+      });
 
   @override
   Widget build(BuildContext context) {

@@ -34,6 +34,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Map<bool, int> heaterValues = {true: 50};
   void _callbackToggle(Map<bool, int> values) {
     heaterValues = values;
+    print(values);
     (bluetoothClient.send(
       Actuator(
         heater: heaterValues.values.first,
@@ -76,13 +77,7 @@ class _DashboardPageState extends State<DashboardPage> {
             },
           ),
           selectedDevice == null
-              ? Container(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: ControlDiv(
-                    statusNotifier: ValueNotifier(StatusType.safe),
-                    heaterValues: _callbackToggle,
-                  ),
-                )
+              ? SizedBox()
               : FutureBuilder(
                   future: connectToDevice(selectedDevice!.address),
                   builder: (context, snapshot) {
