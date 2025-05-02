@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomSlider extends StatefulWidget {
+class CustomSlider extends StatelessWidget {
   final double value;
   final ValueChanged<double> onChanged;
+  final ValueChanged<double> onChangeEnd;
   final double min;
   final double max;
 
@@ -10,16 +11,10 @@ class CustomSlider extends StatefulWidget {
     super.key,
     required this.value,
     required this.onChanged,
+    required this.onChangeEnd,
     this.min = 0.0,
     this.max = 100.0,
   });
-
-  @override
-  State<CustomSlider> createState() => _CustomSliderState();
-}
-
-class _CustomSliderState extends State<CustomSlider> {
-  late double value = widget.value;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +38,10 @@ class _CustomSliderState extends State<CustomSlider> {
         padding: const EdgeInsets.only(top: 22.5, bottom: 7.5),
         child: Slider(
           value: value,
-          onChanged: (newValue) {
-            setState(() => value = newValue);
-            widget.onChanged(value);
-          },
-          min: widget.min,
-          max: widget.max,
+          onChanged: onChanged,
+          onChangeEnd: onChangeEnd,
+          min: min,
+          max: max,
           label: value.toStringAsFixed(0),
         ),
       ),

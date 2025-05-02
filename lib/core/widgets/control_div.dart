@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flex_belt/core/constants/enum.dart';
 import 'package:flex_belt/core/widgets/boxed_icon.dart';
+import 'package:flex_belt/core/widgets/modal_dialog.dart';
 import 'package:flex_belt/core/widgets/slider_value.dart';
 import 'package:flex_belt/core/widgets/switch_button.dart';
 import 'package:flex_belt/core/widgets/toggle_button_general.dart';
@@ -29,12 +32,33 @@ class _ControlDivState extends State<ControlDiv> {
       });
 
   double heaterValue = 0;
-  void setHeaterValue(double value) => setState(() {
-        heaterValue = value;
-        on
-            ? widget.heaterValues({isCold: value.toInt()})
-            : widget.heaterValues({isCold: 0});
-      });
+  double previousHeaterValue = 0;
+  void previewHeaterValue(double value) {
+    setState(() {
+      heaterValue = value;
+    });
+  }
+
+  Future<void> commitHeaterValue(double value) async {
+    if (value > 70) {
+      final confirmed = await showDialog<bool>(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => ModalDialog(callback: (_) {}),
+      );
+      if (confirmed != true) {
+        setState(() => heaterValue = previousHeaterValue);
+        return;
+      }
+    }
+    setState(() {
+      heaterValue = value;
+      previousHeaterValue = heaterValue;
+      on
+          ? widget.heaterValues({isCold: value.toInt()})
+          : widget.heaterValues({isCold: 0});
+    });
+  }
 
   bool on = false;
   void setOn(bool value) => setState(() {
@@ -78,7 +102,11 @@ class _ControlDivState extends State<ControlDiv> {
                   ),
                 ],
               ),
-              CustomSlider(value: 50, onChanged: setHeaterValue),
+              CustomSlider(
+                value: heaterValue,
+                onChanged: previewHeaterValue,
+                onChangeEnd: commitHeaterValue,
+              ),
             ],
           ),
         ),
