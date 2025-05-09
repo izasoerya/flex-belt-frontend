@@ -94,8 +94,6 @@ class _ItemListViewState extends State<ItemListView>
                       _buildDetailContainer(
                           'Flex', widget.payload.flex.toStringAsFixed(1)),
                       _buildDetailContainer(
-                          'Encoder', widget.payload.encoder.toStringAsFixed(1)),
-                      _buildDetailContainer(
                           'Battery', widget.payload.battery.toStringAsFixed(1)),
                     ],
                   ),

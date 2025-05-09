@@ -21,6 +21,8 @@ class _DashboardPageState extends State<DashboardPage> {
   BluetoothDevice? selectedDevice;
 
   final GlobalKey<PayloadListState> _listKey = GlobalKey<PayloadListState>();
+  final GlobalKey<ToggleContainerState> _updateKey =
+      GlobalKey<ToggleContainerState>();
 
   Future<BluetoothClient> connectToDevice(String address) async {
     bluetoothClient = BluetoothClient();
@@ -99,17 +101,23 @@ class _DashboardPageState extends State<DashboardPage> {
                             payload.status.name,
                             payload.description,
                           );
+                          payload = payload;
                         }
                         statusNotifier.value = payload.status;
                         _listKey.currentState?.addPayload(payload);
+                        _updateKey.currentState?.updatePayload(payload);
                       });
                       return Column(
                         children: [
                           ToggleContainer(
-                            onPressed: () {
-                              bluetoothClient
-                                  .send(Actuator(heater: 0, isCold: true));
-                            },
+                            key: _updateKey,
+                            onPressed: () => bluetoothClient.send(
+                              Actuator(
+                                heater: -1,
+                                isCold: true,
+                                resetEncoder: true,
+                              ),
+                            ),
                           ),
                           const SizedBox(height: 10.0),
                           ControlDiv(

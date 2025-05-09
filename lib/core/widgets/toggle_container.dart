@@ -1,9 +1,20 @@
+import 'package:flex_belt/models/payload.dart';
 import 'package:flutter/material.dart';
 
-class ToggleContainer extends StatelessWidget {
+class ToggleContainer extends StatefulWidget {
   final void Function() onPressed;
 
   const ToggleContainer({super.key, required this.onPressed});
+
+  @override
+  State<ToggleContainer> createState() => ToggleContainerState();
+}
+
+class ToggleContainerState extends State<ToggleContainer> {
+  Payload? payload;
+  void updatePayload(Payload item) {
+    setState(() => payload = item);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +83,10 @@ class ToggleContainer extends StatelessWidget {
                       color: Colors.white,
                     )),
           ),
-          _buildDetailContainer('Lingkar Perut', '234.0'),
+          _buildDetailContainer(
+            'Lingkar Perut',
+            payload == null ? '0.0' : payload!.encoder.toStringAsFixed(1),
+          ),
         ],
       ),
     );
