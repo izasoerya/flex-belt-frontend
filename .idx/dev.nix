@@ -4,6 +4,7 @@
     pkgs.jdk17
     pkgs.unzip
   ];
+  # Placeholder for future extensions. Leave empty if no extensions are required.
   idx.extensions = [
     
   ];
