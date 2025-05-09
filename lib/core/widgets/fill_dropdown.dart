@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 class FillDropdown extends StatelessWidget {
   final List<String> items;
   final String? value;
+  final String? label;
   final void Function(String)? onChanged;
 
   const FillDropdown({
     super.key,
     required this.items,
     this.value,
+    this.label,
     this.onChanged,
   });
 
@@ -34,7 +36,7 @@ class FillDropdown extends StatelessWidget {
             isDense: true,
             isExpanded: true,
             hint: Text(
-              'Select Bluetooth Device',
+              label ?? 'Select Bluetooth Device',
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

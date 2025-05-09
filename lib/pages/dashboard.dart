@@ -3,6 +3,7 @@ import 'package:flex_belt/core/widgets/control_div.dart';
 import 'package:flex_belt/core/widgets/notification.dart';
 import 'package:flex_belt/core/widgets/pair_div.dart';
 import 'package:flex_belt/core/widgets/payload_list.dart';
+import 'package:flex_belt/core/widgets/toggle_container.dart';
 import 'package:flex_belt/models/actuator.dart';
 import 'package:flex_belt/services/bluetooth_client.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,8 @@ class _DashboardPageState extends State<DashboardPage> {
   BluetoothDevice? selectedDevice;
 
   final GlobalKey<PayloadListState> _listKey = GlobalKey<PayloadListState>();
+  final GlobalKey<ToggleContainerState> _updateKey =
+      GlobalKey<ToggleContainerState>();
 
   Future<BluetoothClient> connectToDevice(String address) async {
     bluetoothClient = BluetoothClient();
@@ -34,6 +37,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Map<bool, int> heaterValues = {true: 50};
   void _callbackToggle(Map<bool, int> values) {
     heaterValues = values;
+    print(values);
     (bluetoothClient.send(
       Actuator(
         heater: heaterValues.values.first,
@@ -76,7 +80,7 @@ class _DashboardPageState extends State<DashboardPage> {
             },
           ),
           selectedDevice == null
-              ? const SizedBox()
+              ? SizedBox()
               : FutureBuilder(
                   future: connectToDevice(selectedDevice!.address),
                   builder: (context, snapshot) {
@@ -97,17 +101,30 @@ class _DashboardPageState extends State<DashboardPage> {
                             payload.status.name,
                             payload.description,
                           );
+                          payload = payload;
                         }
-                        statusNotifier.value =
-                            payload.status; // <-- triggers the UI
+                        statusNotifier.value = payload.status;
                         _listKey.currentState?.addPayload(payload);
+                        _updateKey.currentState?.updatePayload(payload);
                       });
-                      return Container(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: ControlDiv(
-                          statusNotifier: statusNotifier,
-                          heaterValues: _callbackToggle,
-                        ),
+                      return Column(
+                        children: [
+                          ToggleContainer(
+                            key: _updateKey,
+                            onPressed: () => bluetoothClient.send(
+                              Actuator(
+                                heater: -1,
+                                isCold: true,
+                                resetEncoder: true,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 10.0),
+                          ControlDiv(
+                            statusNotifier: statusNotifier,
+                            heaterValues: _callbackToggle,
+                          ),
+                        ],
                       );
                     }
                   },
