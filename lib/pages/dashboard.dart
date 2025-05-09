@@ -3,6 +3,7 @@ import 'package:flex_belt/core/widgets/control_div.dart';
 import 'package:flex_belt/core/widgets/notification.dart';
 import 'package:flex_belt/core/widgets/pair_div.dart';
 import 'package:flex_belt/core/widgets/payload_list.dart';
+import 'package:flex_belt/core/widgets/toggle_container.dart';
 import 'package:flex_belt/models/actuator.dart';
 import 'package:flex_belt/services/bluetooth_client.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +78,9 @@ class _DashboardPageState extends State<DashboardPage> {
             },
           ),
           selectedDevice == null
-              ? SizedBox()
+              ? ToggleContainer(
+                  onPressed: () => {},
+                )
               : FutureBuilder(
                   future: connectToDevice(selectedDevice!.address),
                   builder: (context, snapshot) {
