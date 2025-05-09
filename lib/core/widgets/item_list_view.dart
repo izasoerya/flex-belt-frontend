@@ -68,7 +68,6 @@ class _ItemListViewState extends State<ItemListView>
             ),
             leading: const Icon(Icons.circle),
             iconColor: widget.payload.status.getColor(),
-            trailing: _hertaKuruKuru(),
             onTap: () => setState(() => showDetails = !showDetails),
           ),
           if (showDetails)
