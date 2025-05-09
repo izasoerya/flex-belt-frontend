@@ -42,7 +42,10 @@ class ToggleContainer extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(8.0),
+          bottomRight: Radius.circular(8.0),
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),

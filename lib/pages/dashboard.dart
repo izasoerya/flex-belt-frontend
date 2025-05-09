@@ -78,9 +78,7 @@ class _DashboardPageState extends State<DashboardPage> {
             },
           ),
           selectedDevice == null
-              ? ToggleContainer(
-                  onPressed: () => {},
-                )
+              ? SizedBox()
               : FutureBuilder(
                   future: connectToDevice(selectedDevice!.address),
                   builder: (context, snapshot) {
@@ -105,12 +103,20 @@ class _DashboardPageState extends State<DashboardPage> {
                         statusNotifier.value = payload.status;
                         _listKey.currentState?.addPayload(payload);
                       });
-                      return Container(
-                        padding: const EdgeInsets.only(top: 10.0),
-                        child: ControlDiv(
-                          statusNotifier: statusNotifier,
-                          heaterValues: _callbackToggle,
-                        ),
+                      return Column(
+                        children: [
+                          ToggleContainer(
+                            onPressed: () {
+                              bluetoothClient
+                                  .send(Actuator(heater: 0, isCold: true));
+                            },
+                          ),
+                          const SizedBox(height: 10.0),
+                          ControlDiv(
+                            statusNotifier: statusNotifier,
+                            heaterValues: _callbackToggle,
+                          ),
+                        ],
                       );
                     }
                   },
