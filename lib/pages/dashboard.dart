@@ -113,8 +113,8 @@ class _DashboardPageState extends State<DashboardPage> {
                             key: _updateKey,
                             onPressed: () => bluetoothClient.send(
                               Actuator(
-                                heater: -1,
-                                isCold: true,
+                                heater: heaterValues.values.first,
+                                isCold: heaterValues.keys.first,
                                 resetEncoder: true,
                               ),
                             ),

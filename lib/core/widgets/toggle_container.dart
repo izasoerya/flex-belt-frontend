@@ -75,7 +75,7 @@ class ToggleContainerState extends State<ToggleContainer> {
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
-            onPressed: () {},
+            onPressed: widget.onPressed,
             child: Text('Reset',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontSize: 14.0,
