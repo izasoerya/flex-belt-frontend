@@ -121,7 +121,7 @@ class _DashboardPageState extends State<DashboardPage> {
                           ),
                           const SizedBox(height: 10.0),
                           ControlDiv(
-                            statusNotifier: statusNotifier,
+                            // statusNotifier: statusNotifier,
                             heaterValues: _callbackToggle,
                           ),
                         ],
